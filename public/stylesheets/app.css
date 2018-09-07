@@ -10,10 +10,7 @@ body {
   margin-bottom: 60px;
 }
 
-.jumbotron {
-  background: url("../images/beerback.jpg") !important;
-  background-position: center;
-}
+
 
 .comment {
   background-color: lightblue;

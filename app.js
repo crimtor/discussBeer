@@ -19,15 +19,14 @@ require('dotenv').load();
 //requiring routes
 var commentRoutes    = require("./routes/comments"),
     beerRoutes = require("./routes/beers"),
-    indexRoutes      = require("./routes/index")
+    indexRoutes      = require("./routes/index");
     
-const databaseUri = process.env.MONGODB_DBURI;
+const databaseUri = process.env.MONGODB_URI;
 
-mongoose.connect("mongodb://localhost/discuss_beer", {useNewUrlParser: true})
+mongoose.connect(databaseUri, {useNewUrlParser: true})
       .then(() => console.log(`Database connected`))
       .catch(err => console.log(`Database connection error: ${err.message}`));
       
-
 // App Configuration
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
