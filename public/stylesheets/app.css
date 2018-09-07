@@ -4,10 +4,22 @@ html {
   position: relative;
   min-height: 100%;
 }
+
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
 }
+
+.jumbotron {
+  background: url("../images/beerback.jpg") !important;
+  background-position: center;
+}
+
+.comment {
+  background-color: lightblue;
+  border: 3px groove steelblue ;
+}
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -34,15 +46,14 @@ body {
     padding: 9px;
 }
 
-/* Google Map styles */
-#map {
-	height: 400px;
-	width: 100%;
-}
-
-/* Campground show page delete button */
+/* Beer show page delete button */
 .delete-form {
 	display: inline-block;
+}
+.icon img{
+  margin-top: -0.3em;
+  padding-right: 0.3em;
+  height: 1.5em;
 }
 
 /* Flexbox grid fix */

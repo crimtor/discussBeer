@@ -9,8 +9,8 @@
       <div class="caption-full">
         <div class="row">
         <div class="col-md-6">
-        <h4><a><%=beer.brewery%></a></h4>
-        <h4><a><%=beer.name%></a></h4>
+        <h4><a href="brewery/<%= beer.brewery %>"><%=beer.brewery%></a></h4>
+        <h4><%=beer.name%></h4>
         </div>
         <div class="col-md-6">
          <h4>
@@ -23,7 +23,8 @@
         </div>
         <p><%= beer.description %></p>
         <p>
-          <em>Submitted by: <%= beer.author.username %>, <%= moment(beer.createdAt).fromNow() %></em>
+          <em>Submitted by: <a href="/users/<%= beer.author.id %>">
+            <%= beer.author.username %></a>, <%= moment(beer.createdAt).fromNow() %></em>
         </p>
         <% if(currentUser && beer.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
         <a class="btn btn-warning" href="/beers/<%= beer._id %>/edit">Edit</a>
@@ -40,7 +41,7 @@
       <hr>
       <% beer.comments.forEach(function(comment){ %>
       <div class="row">
-        <div class="col-md-12">
+        <div class="comment col-md-12">
           <strong><%= comment.author.username %></strong>
           <span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
           <div>

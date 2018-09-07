@@ -10,7 +10,7 @@ function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
 
-//INDEX - show all campgrounds
+//INDEX - show all beers
 router.get("/", function(req, res){
   if(req.query.search && req.xhr) {
       const regex = new RegExp(escapeRegex(req.query.search), 'gi');
@@ -38,6 +38,17 @@ router.get("/", function(req, res){
   }
 });
 
+router.get("/brewery/:breweryname", function(req, res){
+      // Get all beers from DB
+      Beer.find().where('brewery').equals(req.params.breweryname).exec(function(err, beers) {
+      if(err) {
+        req.flash("error", "Something went wrong.");
+        res.redirect("/");
+      }
+      res.render("brewery/show", {beers: beers});
+    });
+});
+
 //CREATE - add new beer to DB
 router.post("/", isLoggedIn, isSafe, function(req, res){
   // get data from form and add to beers array
@@ -54,7 +65,7 @@ router.post("/", isLoggedIn, isSafe, function(req, res){
   var cost = req.body.cost;
     
 var newBeer = {brewery: brewery, name: name, image: image, description: desc, style: styl, rating: rating, cost: cost, author:author};
-    // Create a new campground and save to DB
+    // Create a new beer and save to DB
     Beer.create(newBeer, function(err, newlyCreated){
         if(err){
             console.log(err);
@@ -80,7 +91,7 @@ router.get("/:id", function(req, res){
             req.flash('error', 'Sorry, that beer does not exist!');
             return res.redirect('/beers');
         }
-        //render show template with that campground
+        //render show template with that beer
         res.render("beers/show", {beer: foundBeer});
     });
 });
@@ -91,7 +102,7 @@ router.get("/:id/edit", isLoggedIn, checkUserBeer, function(req, res){
   res.render("beers/edit", {beer: req.beer});
 });
 
-// PUT - updates campground in the database
+// PUT - updates beer in the database
 router.put("/:id", isLoggedIn, checkUserBeer, isSafe, function(req, res){
     
     var newData = {brewery: req.body.brewery, name: req.body.name, image: req.body.image, description: req.body.description, style: req.body.style, rating: req.body.rating, cost: req.body.cost };
@@ -106,7 +117,7 @@ router.put("/:id", isLoggedIn, checkUserBeer, isSafe, function(req, res){
     });
 });
 
-// DELETE - removes campground and its comments from the database
+// DELETE - removes beer and its comments from the database
 router.delete("/:id", isLoggedIn, checkUserBeer, function(req, res) {
     Comment.remove({
       _id: {
